@@ -44,8 +44,18 @@ export function NodeOpenWebConstructor (this : NodeOpenWeb, conf : NodeOpenWebDe
         let driverError = false;
         msg.driver = WD2Manager.getDriver(conf);
         this.status({ fill : "blue", shape : "ring", text : "opening browser"});
+        if(conf.webURL != "msg.url"){
+            this.log("Config web value is " + conf.webURL);
+            msg.url = conf.webURL;
+        }
+        else if(msg.payload !=null){
+            let message = JSON.stringify(msg.payload);
+            let obj = JSON.parse(message);
+            this.log("From payload. Have an url. It is "+ obj.url);
+            msg.url = obj.url;
+        }
         try {
-            await msg.driver.get(conf.webURL);
+            await msg.driver.get(msg.url);
         } catch (e) {
             msg.driver = null;
             node.error("Can't open an instance of " + conf.browser);
@@ -64,6 +74,7 @@ export function NodeOpenWebConstructor (this : NodeOpenWeb, conf : NodeOpenWebDe
                             await msg.driver.manage().window().maximize();
                 send(msg);
                 this.status({ fill : "green", shape : "dot", text : "success"});
+                msg.url = null;
                 done();
             }
         } catch (e) {
