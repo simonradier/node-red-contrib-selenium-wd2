@@ -45,13 +45,11 @@ export function NodeOpenWebConstructor (this : NodeOpenWeb, conf : NodeOpenWebDe
         msg.driver = WD2Manager.getDriver(conf);
         this.status({ fill : "blue", shape : "ring", text : "opening browser"});
         if(conf.webURL != "msg.url"){
-            this.log("Config web value is " + conf.webURL);
             msg.url = conf.webURL;
         }
         else if(msg.payload !=null){
             let message = JSON.stringify(msg.payload);
             let obj = JSON.parse(message);
-            this.log("From payload. Have an url. It is "+ obj.url);
             msg.url = obj.url;
         }
         try {
