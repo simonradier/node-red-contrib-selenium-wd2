@@ -33,7 +33,9 @@ export class WD2Manager {
         const port = server.split(":")[1] || "80";
         return portCheck(host, parseInt(port, 10));
     }
-
+    public static clearDriverList(){
+        WD2Manager._driverList = [];
+    }
     public static getDriver(conf: NodeOpenWebDef): WebDriver {
         let builder = new Builder().withCapabilities({ browserName: 'chrome', chromeOptions: { w3c: false } }).forBrowser(conf.browser).usingServer(conf.serverURL);
         if (conf.headless) {
@@ -55,19 +57,30 @@ export class WD2Manager {
         }
         let driver: WebDriver;
         if (WD2Manager._driverList.length >= 1) {
-            driver = this.getExistingBrowser();
+            try {
+                driver = this.getExistingBrowser();
+            }
+            catch (error) {
+                createSessionInstance();
+                driver = WD2Manager._driverList.pop();
+            }
         }
         else {
+            createSessionInstance();
+            // driver = WD2Manager._driverList.pop();
+        }
+        return driver;
+
+        function createSessionInstance() {
             driver = builder.withCapabilities({ browserName: 'chrome', chromeOptions: { w3c: false } }).build();
             driver.getSession().then(function (session) {
                 WD2Manager._session_id = session.getId();
             });
-            driver.getCapabilities().then(function(c){
-                c.set('w3c',false);
+            driver.getCapabilities().then(function (c) {
+                c.set('w3c', false);
             });
             WD2Manager._driverList.push(driver);
         }
-        return driver;
     }
 
     public static checkIfCritical(error: Error): boolean {
