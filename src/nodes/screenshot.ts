@@ -34,7 +34,7 @@ export function NodeScreenshotConstructor (this : NodeScreenshot, conf : NodeScr
                     const sc = await msg.driver.takeScreenshot();
                     if (filePath)
                         await fs.writeFile(filePath, sc, "base64");
-                    msg.payload = sc;
+                    msg.payload = filePath.replace(/^.*[\\\/]/, '');
                     send([msg, null]);
                     node.status({ fill : "green", shape : "dot", text : "success"});
                     done();

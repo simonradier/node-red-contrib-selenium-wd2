@@ -31,6 +31,7 @@ export function NodeCloseWebConstructor (this : NodeCloseWeb, conf : NodeCloseWe
                     this.status({ fill : "blue", shape : "ring", text : "closing"});
                     await msg.driver.quit();
                     msg.driver = null;
+                    WD2Manager.clearDriverList();
                     this.status({ fill : "green", shape : "dot", text : "closed"});
                     send(msg);
                     done();
