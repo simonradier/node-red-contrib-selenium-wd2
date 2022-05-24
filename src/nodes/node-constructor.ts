@@ -35,6 +35,7 @@ export function GenericSeleniumConstructor<TNode extends Node<any>, TNodeDef ext
                                 if (WD2Manager.checkIfCritical(err)) {
                                     node.status({ fill : "red", shape : "dot", text : "critical error"});
                                     node.error(err.toString());
+                                    console.log(err);
                                     done(err);
                                 } else {
                                     node.status({ fill : "yellow", shape : "dot", text : "location error"});
@@ -50,6 +51,7 @@ export function GenericSeleniumConstructor<TNode extends Node<any>, TNodeDef ext
                                 } catch (e) {
                                     node.status({ fill : "red", shape : "dot", text : "critical error"});
                                     node.error(e.toString());
+                                    console.log(e);
                                     delete msg.driver;
                                     done(e);
                                 }
