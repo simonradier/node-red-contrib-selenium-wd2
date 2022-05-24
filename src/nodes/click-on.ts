@@ -66,7 +66,8 @@ async function inputAction(node: NodeClickOn, conf: NodeClickOnDef, action: Sele
     return new Promise<void>(async (resolve, reject) => {
         if (!conf.clickOn) {
             try {
-                if (conf.selector === "boundaryBox") {
+                if (conf.selector === "boundaryBox" && conf.target === "msg.selector") {
+                    conf.target = Object(msg.payload)["selector"];;
                     let coordonates = conf.target.split(",");
                     let result = WD2Manager.midpoint(Number.parseInt(coordonates[0]), Number.parseInt(coordonates[1]), Number.parseInt(coordonates[2]), Number.parseInt(coordonates[3]));
                     let script = `document.elementFromPoint(${result[0]},${result[1]}).click()`;

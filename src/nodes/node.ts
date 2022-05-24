@@ -78,7 +78,6 @@ export function waitForElement(conf: SeleniumNodeDef, msg: SeleniumMsg): Observa
                 if (selector !== "") {
                     if (selector === "boundaryBox") {
                         element = await msg.driver.wait(until.elementLocated(By.css("body")), timeout);
-                        console.log(element);
                     }
                     else {
                         // @ts-ignore

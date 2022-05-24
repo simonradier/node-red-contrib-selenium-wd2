@@ -67,7 +67,6 @@ export class WD2Manager {
         }
         else {
             createSessionInstance();
-            // driver = WD2Manager._driverList.pop();
         }
         return driver;
 
