@@ -17,6 +17,7 @@ export function GenericSeleniumConstructor<TNode extends Node<any>, TNodeDef ext
             node.status({});
             try {
                 if (!inputPreCondAction || await inputPreCondAction(node, conf, action)) {
+                    msg.driver = WD2Manager.getExistingBrowser();
                     if (msg.driver == null) {
                         const error = new Error("Open URL must be call before any other action. For node : " + conf.name);
                         node.status({ fill : "red", shape : "ring", text : "error"});

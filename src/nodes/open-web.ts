@@ -57,12 +57,6 @@ export function NodeOpenWebConstructor(this: NodeOpenWeb, conf: NodeOpenWebDef) 
         } catch (e) {
             WD2Manager.clearDriverList();
             msg.driver = WD2Manager.getDriver(conf);
-            // msg.driver = null;
-            // node.error("Can't open an instance of " + conf.browser);
-            // node.status({ fill: "red", shape: "ring", text: "launch error" });
-            // driverError = true;
-            // msg.driver = null;
-            // done(e);
             await msg.driver.get(msg.url);
         }
         try {
