@@ -21,12 +21,8 @@ async function inputPreCondAction(node: NodeClickOn, conf: NodeClickOnDef, actio
             try {
                 if (conf.selector === "boundaryBox") {
                     let coordonates = conf.target.split(',');
-                    console.log("Coordonates: " + coordonates);
                     let result = WD2Manager.midpoint(Number.parseInt(coordonates[0]), Number.parseInt(coordonates[1]), Number.parseInt(coordonates[2]), Number.parseInt(coordonates[3]));
-                    console.log("Result :" + result);
                     let script = `document.elementFromPoint(${result[0]},${result[1]}).click()`;
-                    console.log(msg.element);
-                    await msg.driver.executeScript('alert("test")',msg.element);
                     await msg.driver.executeScript(script, msg.element);
                 }
                 else {
@@ -67,14 +63,13 @@ async function inputAction(node: NodeClickOn, conf: NodeClickOnDef, action: Sele
         if (!conf.clickOn) {
             try {
                 if (conf.selector === "boundaryBox" && conf.target === "msg.selector") {
-                    conf.target = Object(msg.payload)["selector"];;
-                    let coordonates = conf.target.split(",");
+                    let coordonates = Object(msg.payload)["selector"].split(",");
                     let result = WD2Manager.midpoint(Number.parseInt(coordonates[0]), Number.parseInt(coordonates[1]), Number.parseInt(coordonates[2]), Number.parseInt(coordonates[3]));
                     let script = `document.elementFromPoint(${result[0]},${result[1]}).click()`;
                     await msg.driver.executeScript(script, msg.element);
                 }
                 else {
-                    await msg.element.click()
+                    await msg.element.click();
                 }
                 node.status({ fill: "green", shape: "dot", text: "success" })
                 if (msg.error) { delete msg.error; }
