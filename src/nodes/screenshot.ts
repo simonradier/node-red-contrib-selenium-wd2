@@ -34,7 +34,7 @@ export function NodeScreenshotConstructor(this: NodeScreenshot, conf: NodeScreen
                     const sc = await msg.driver.takeScreenshot();
                     if (filePath)
                         await fs.writeFile(filePath, sc, "base64");
-                    msg.payload = JSON.stringify({ fileName: filePath.replace(/^.*[\\\/]/, '') });
+                    msg.payload = JSON.stringify({ filename: filePath.replace(/^.*[\\\/]/, '') });
 
                     send([msg, null]);
                     node.status({ fill: "green", shape: "dot", text: "success" });

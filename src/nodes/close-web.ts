@@ -18,7 +18,7 @@ export function NodeCloseWebConstructor (this : NodeCloseWeb, conf : NodeCloseWe
     this.on("input", async (message : any, send, done) => {
         // Cheat to allow correct typing in typescript
         const msg : SeleniumMsg = message;
-
+        msg.driver = WD2Manager.getExistingBrowser();
         if (null === msg.driver) {
             const error = new Error("Can't use this node without a working open-web node first");
             this.status({ fill : "red", shape : "ring", text : "error"});

@@ -33,7 +33,7 @@ export class WD2Manager {
         const port = server.split(":")[1] || "80";
         return portCheck(host, parseInt(port, 10));
     }
-    public static clearDriverList(){
+    public static clearDriverList() {
         WD2Manager._driverList = [];
     }
     public static getDriver(conf: NodeOpenWebDef): WebDriver {
@@ -99,14 +99,25 @@ export class WD2Manager {
     }
 
     public static getExistingBrowser() {
-        const client = new HttpClient(WD2Manager._serverURL);
-        const executor = new Executor(client);
-        const session = new Session(WD2Manager._session_id, wd.Capabilities.chrome());
+        try {
+            const client = new HttpClient(WD2Manager._serverURL);
+            const executor = new Executor(client);
+            const session = new Session(WD2Manager._session_id, wd.Capabilities.chrome());
 
-        return new WebDriver(session, executor);
+            return new WebDriver(session, executor);
+        }
+        catch (e) {
+            WD2Manager.clearDriverList();
+            const client = new HttpClient(WD2Manager._serverURL);
+            const executor = new Executor(client);
+            const session = WebDriver.createSession();
+            session.getSession().then(function (session) {
+                return new WebDriver(session, executor);
+            });
+        }
     }
-    
-    public static midpoint(x1:number, y1:number, x2:number, y2:number) {
+
+    public static midpoint(x1: number, y1: number, x2: number, y2: number) {
         return [(x1 + x2) / 2, (y1 + y2) / 2];
     }
 
