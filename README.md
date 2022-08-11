@@ -1,3 +1,6 @@
+### **This package is no longer maintened, you can switch to [node-red-contrib-simple-webdriver](https://github.com/simonradier/node-red-contrib-simple-webdriver) which provides the same set of feature but not based on selenium to avoid the dependency with Java.**
+
+
 # node-red-contrib-selenium-wd2
 Selenium-wd2 nodes for Node-Red allow web browser automation based on the [Selenium-Webdriver](https://www.selenium.dev/documentation/) API. Based on [node-red-constrib-selenium-webdriver](https://flows.nodered.org/node/node-red-contrib-selenium-webdriver) library, it was rewritten in Typescript to ease its maintenance, improve the overall stability and upgrade a little bit the set of features.
 
